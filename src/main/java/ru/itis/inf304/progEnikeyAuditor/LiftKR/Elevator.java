@@ -10,16 +10,22 @@ public abstract class Elevator implements Call {
     public abstract int getFloor();
 
     public  String callElevator() throws ElevatorException {
-        if (getFloor() % 2 != 0 && generateSituation().name() == "OddElevator" && generateStatus().name() == "Свободен") {
+        int floor = getFloor();
+        String situation = generateSituation().name();
+        String status = generateStatus().name();
+        System.out.println(floor + " " + situation + " " + status);
+        if (floor % 2 != 0 && situation == "OddElevator" && status == "Свободен") {
             return ("Вызывается лифт на " + getFloor() + " этаж");
         }
-        if (getFloor() % 2 == 0 && generateSituation().name() == "EvenElevator" && generateStatus().name() == "Свободен") {
+        else if (floor % 2 == 0 && situation == "EvenElevator" && status == "Свободен") {
             return("Вызывается лифт на " + getFloor() + " этаж");
         }
-        if (generateSituation().name() == "EmployeesElevator" && generateSituation().name() == "Свободен") {
+        else if (situation == "EmployeesElevator" && status == "Свободен") {
             return("Вызывается лифт на " + getFloor() + " этаж");
         }
-        throw new ElevatorException("Все лифты заняты");
+        else {
+            throw new ElevatorException("Все лифты заняты");
+        }
 
     }
 

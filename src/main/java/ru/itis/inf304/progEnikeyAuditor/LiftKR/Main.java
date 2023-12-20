@@ -16,7 +16,7 @@ public class Main {
         elevators[6] = new EmployeesElevator();
 
         for (int i = 0; i < 20; i++) {
-            elevators[(int)Math.random()*7].callElevator();
+            System.out.println(elevators[(int)Math.random()*7].callElevator());;
 
         }
 
