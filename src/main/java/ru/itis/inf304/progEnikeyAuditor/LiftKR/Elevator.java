@@ -15,13 +15,13 @@ public abstract class Elevator implements Call {
         String status = generateStatus().name();
         System.out.println(floor + " " + situation + " " + status);
         if (floor % 2 != 0 && situation == "OddElevator" && status == "Свободен") {
-            return ("Вызывается лифт на " + getFloor() + " этаж");
+            return ("Вызывается лифт на " + floor + " этаж");
         }
         else if (floor % 2 == 0 && situation == "EvenElevator" && status == "Свободен") {
-            return("Вызывается лифт на " + getFloor() + " этаж");
+            return("Вызывается лифт на " + floor + " этаж");
         }
         else if (situation == "EmployeesElevator" && status == "Свободен") {
-            return("Вызывается лифт на " + getFloor() + " этаж");
+            return("Вызывается лифт на " + floor + " этаж");
         }
         else {
             throw new ElevatorException("Все лифты заняты");
