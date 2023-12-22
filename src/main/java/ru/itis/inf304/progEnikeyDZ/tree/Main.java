@@ -1,6 +1,8 @@
 package ru.itis.inf304.progEnikeyDZ.tree;
 import java.util.Random;
 
+import static ru.itis.inf304.progEnikeyDZ.tree.BTree.HeapPrinter.printHeapTree;
+
 public class Main {
     public static void main(String[] args) {
         BTree heap = new BTree();
@@ -8,8 +10,10 @@ public class Main {
             heap.add((int)(Math.random() * 1000) + 1);
         }
 
-        System.out.println(heap);
-        heap.sort();
-        System.out.println(heap);
+
+        System.out.println(printHeapTree(heap.getHeap(), heap.getHeapSize()));
+//        heap.sort();
+//        System.out.println(printHeapTree(heap.getHeap(), heap.getHeapSize()));
+
     }
 }

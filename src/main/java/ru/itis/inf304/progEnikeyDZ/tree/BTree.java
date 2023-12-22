@@ -1,5 +1,8 @@
 package ru.itis.inf304.progEnikeyDZ.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class BTree {
 
     private int[] heap = new int[1];
@@ -16,6 +19,12 @@ public class BTree {
 
     public int getParentPos(int position) {
         return (position - 1) / 2;
+    }
+    public int getHeapSize() {
+        return heapSize;
+    }
+    public int[] getHeap () {
+        return heap;
     }
 
     private void swap(int position1, int position2) {
@@ -45,14 +54,15 @@ public class BTree {
     }
 
     // метод следит, чтобы у родителя наследники стояли правильно(число слева < число справа)
-    public void sort() {
-        for (int i = 0; i < heapSize / 2 ; i++) {
-            siftUp(i);
-            if (heap[getLeftHeirPos(i)] > heap[getRightHeirPos(i)]) {
-                swap(getLeftHeirPos(i), getRightHeirPos(i));
-            }
-        }
-    }
+//    public void sort() {
+//        for (int i = 0; i < heapSize / 2 ; i++) {
+//            siftUp(i);
+//            if (heap[getLeftHeirPos(i)] > heap[getRightHeirPos(i)]) {
+//                swap(getLeftHeirPos(i), getRightHeirPos(i));
+//            }
+//        }
+//    }
+
 
     //добавляем элемент в кучу и перемещаем наверх до тех пор, пока родитель не станет больше этого числа
     public void add(int value) {
@@ -62,18 +72,44 @@ public class BTree {
         heapSize++;
     }
 
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < heapSize; i *= 2) {
-            for (int j = i - 1; j < i * 2 - 1 && j < heapSize; j++) {
-                sb.append(" ").append(heap[j]).append(" ");
+    public class HeapPrinter {
+        public static String printHeapTree(int[] heap, int heapSize) {
+            StringBuilder sb = new StringBuilder();
+            int height = (int) (Math.log(heapSize + 1) / Math.log(2));
+            int nodesAtLevel = 1;
+            int maxLength = 6 * (int) Math.pow(2, height - 1);
+            Queue<Integer> queue = new LinkedList<>();
+            queue.add(0);
+
+            for (int i = 0; i < height; i++) {
+                sb.append(indent(maxLength / (int) Math.pow(2, i + 1)));
+                for (int j = 0; j < nodesAtLevel; j++) {
+                    int index = queue.remove();
+                    if (index < heapSize) {
+                        sb.append(String.format("%-6d", heap[index]));
+                        queue.add(2 * index + 1);
+                        queue.add(2 * index + 2);
+                    } else {
+                        sb.append(" ");
+                        queue.add(-1);
+                        queue.add(-1);
+                    }
+                    sb.append(indent(maxLength / (int) Math.pow(2, i + 1) - 1));
+                }
+                sb.append("\n");
+                nodesAtLevel *= 2;
             }
-            sb.append("\n");
+            return sb.toString();
         }
-        return sb.toString();
+
+        private static String indent(int length) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < length; i++) {
+                sb.append(" ");
+            }
+            return sb.toString();
+        }
     }
-
-
 
 
 }
