@@ -19,14 +19,14 @@ public class Main {
             // Синхронизированный доступ к лог файлу
             logWriter = new PrintWriter(new FileWriter(logFileName), true);
 
-            ExecutorService executorService = Executors.newFixedThreadPool(5);
+            ExecutorService executorService = Executors.newFixedThreadPool(7);
 
-            File folder = new File("cw2/v22");
+            File folder = new File("cw2/v23");
             File[] listOfFiles = folder.listFiles();
             contents = new ArrayList<>();
 
             for (File file : listOfFiles) {
-                executorService.submit(new Logging(file));
+                executorService.submit(new Logging(file, logWriter));
             }
 
             executorService.shutdown();
